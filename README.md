@@ -1,4 +1,4 @@
-#Spark 1.6.1 (Standalone)
+#Spark (Standalone)
 
 ##Start a standalone cluster
 
