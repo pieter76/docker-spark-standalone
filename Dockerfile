@@ -1,17 +1,18 @@
 FROM java:openjdk-8
+
+ENV JAVA_VERSION 8u171
+ENV JAVA_DEBIAN_VERSION 8u171-b11-1~bpo8+1
  
 MAINTAINER Suparit Krityakien <suparit@wongnai.com>
 
-ARG __APACHE_MIRROR_SERVER=http://www-us.apache.org
+ARG __APACHE_MIRROR_SERVER=http://downloads.apache.org
 ARG __SPARK_VERSION=2.3.4
-ARG __HADOOP_VERSION=3.2.1
+ARG __HADOOP_VERSION=2.7
 
-RUN apt-get update \
-	&& apt-get -y install curl wget bash \
-	&& rm -rf /var/lib/apt/lists/*
+RUN apt-get install curl wget bash 
 
 RUN mkdir -p /opt \
-    && wget -q -O - ${__APACHE_MIRROR_SERVER}/dist/spark/spark-${__SPARK_VERSION}/spark-${__SPARK_VERSION}-bin-hadoop${__HADOOP_VERSION}.tgz | tar -xzf - -C /opt \
+    && wget -q -O - ${__APACHE_MIRROR_SERVER}/spark/spark-${__SPARK_VERSION}/spark-${__SPARK_VERSION}-bin-hadoop${__HADOOP_VERSION}.tgz | tar -xzf - -C /opt \
     && mv /opt/spark-${__SPARK_VERSION}-bin-hadoop${__HADOOP_VERSION} /opt/spark
 
 COPY scripts /opt/spark/docker-scripts
